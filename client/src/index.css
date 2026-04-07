@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-subtext: hsl(var(--subtext));
+  --color-icons: hsl(var(--icons));
+  --color-border: hsl(var(--border));
+  --color-card: hsl(var(--card));
+  --color-hover: hsl(var(--hover));
+  --color-buttonbg: hsl(var(--buttonbg));
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* pure white */
+    --foreground: 0 0% 10%; /* near black text */
+
+    --subtext: 220 10% 45%; /* soft gray-blue text */
+    --border: 220 15% 88%; /* subtle border */
+
+    --icons: 220 10% 35%; /* muted icon color */
+
+    --card: 0 0% 98%; /* soft card background */
+    --hover: 210 40% 96%; /* very light blue hover */
+
+    /* 🔵 LinkedIn Blue */
+    --buttonbg: 214 89% 52%; /* #0A66C2 */
+    --buttonhover: 214 89% 42%; /* darker blue hover */
+    --accent: 210 100% 96%; /* light blue tint (background accents) */
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 92%;
+    --subtext: 220 5% 41%;
+    --border: 220 5% 41%;
+    --icons: 0 0% 68%;
+    --card: 0 0% 7%;
+    --hover: 0 0% 77%;
+    --buttonbg: 0 0% 18%;
+  }
+}
