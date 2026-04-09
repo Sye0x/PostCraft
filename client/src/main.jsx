@@ -3,12 +3,17 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter, Routes, Route } from "react-router";
 import PostGeneratePage from "./pages/postGeneratepage.jsx";
-
+import ForgotPasswordPage from "./pages/forgotPassword.jsx";
+import Register from "./pages/register.jsx";
+import Login from "./pages/login.jsx";
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/post-generate" element={<PostGeneratePage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   </BrowserRouter>,
 );

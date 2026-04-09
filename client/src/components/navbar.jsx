@@ -91,7 +91,7 @@ h-30"
         className="hidden md:flex items-center space-x-6"
       >
         <Link
-          to="/"
+          to="/login"
           className="text-buttonbg cursor-pointer
           font-semibold border border-buttonbg rounded-lg py-2 px-6 
           hover:bg-buttonbg hover:text-white hover:scale-105 transition-all duration-300"
@@ -100,7 +100,7 @@ h-30"
         </Link>
 
         <Link
-          to="/"
+          to="/register"
           className="bg-buttonbg cursor-pointer
            text-white font-semibold rounded-lg py-2 px-6 
            hover:bg-buttonbg hover:text-white hover:scale-105 transition-all duration-300"
@@ -182,7 +182,7 @@ h-30"
               </Link>
 
               <Link
-                to="/signup"
+                to="/register"
                 className="bg-buttonbg text-white rounded-lg py-3 px-8 font-semibold hover:scale-105 transition"
               >
                 Sign Up
