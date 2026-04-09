@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import { Link } from "react-router";
 function HeroSection() {
   return (
     <section className="min-h-screen flex items-center justify-center px-4 md:px-30">
@@ -7,7 +7,7 @@ function HeroSection() {
         initial={{ opacity: 0, y: 80, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-230 h-75 md:h-83 lg:h-88 bg-background z-20 shadow-2xl shadow-foreground rounded-2xl p-7"
+        className="w-230 h-75 md:h-83 lg:h-88 bg-background z-20 shadow-2xl shadow-buttonbg rounded-2xl p-7"
       >
         {/* Heading */}
         <motion.h1
@@ -45,7 +45,7 @@ function HeroSection() {
           transition-all duration-200 ease-out hover:bg-buttonbg/90 hover:shadow-xl hover:-translate-y-0.5
           active:scale-95 active:shadow-md active:bg-buttonbg/80 cursor-pointer mt-5"
         >
-          Get Started
+          <Link to="/post-generate">Get Started</Link>
         </motion.button>
       </motion.div>
     </section>

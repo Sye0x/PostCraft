@@ -31,13 +31,20 @@
   }
 
   .dark {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 92%;
-    --subtext: 220 5% 41%;
-    --border: 220 5% 41%;
-    --icons: 0 0% 68%;
-    --card: 0 0% 7%;
-    --hover: 0 0% 77%;
-    --buttonbg: 0 0% 18%;
+    --background: 0 0% 8%; /* soft dark (not pure black) */
+    --foreground: 0 0% 92%; /* clean readable white */
+
+    --subtext: 0 0% 65%; /* muted text */
+    --border: 0 0% 18%; /* subtle borders */
+
+    --icons: 0 0% 70%;
+
+    --card: 0 0% 12%; /* slight elevation */
+    --hover: 0 0% 16%; /* gentle hover */
+
+    --buttonbg: 214 89% 52%; /* LinkedIn blue */
+    --buttonhover: 214 89% 45%;
+
+    --accent: 214 30% 18%; /* very subtle blue tint */
   }
 }

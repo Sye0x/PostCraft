@@ -72,9 +72,9 @@ function FeatureCard({ icon, heading, detail }) {
         visible: { opacity: 1, y: 0, scale: 1 },
       }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="group rounded-2xl p-px bg-linear-to-br from-white/20 to-white/5 hover:from-white/40 hover:to-white/10"
+      className="group rounded-2xl p-px bg-linear-to-br from-white/20 to-white/5  shadow-lg shadow-buttonbg/30"
     >
-      <div className="rounded-2xl bg-background/80 backdrop-blur p-6 shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 flex flex-col gap-4">
+      <div className="rounded-2xl bg-background/80 backdrop-blur p-6 shadow-lg transition-all duration-300  flex flex-col gap-4">
         {/* Heading */}
         <h3 className="text-lg font-semibold text-buttonbg">{heading}</h3>
 

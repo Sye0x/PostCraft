@@ -24,7 +24,11 @@ function Navbar() {
       initial={{ opacity: 0, y: -60 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="w-full flex items-center justify-between px-6 md:px-10 py-4 bg-white shadow-lg shadow-subtext h-30"
+      className="w-full flex items-center justify-between px-6 md:px-10 py-4 
+bg-background/80 backdrop-blur-lg 
+border-b border-border 
+shadow-lg shadow-black/5 
+h-30"
     >
       {/* Logo + Links */}
       <div className="flex items-center space-x-10">
@@ -40,7 +44,9 @@ function Navbar() {
             to="/"
             className="transition-transform duration-300 hover:scale-105"
           >
-            <h1 className="text-2xl text-buttonbg font-bold">PostCraft</h1>{" "}
+            <h1 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">
+              Post<span className="text-buttonbg">Craft</span>
+            </h1>
           </Link>
         </motion.div>
 

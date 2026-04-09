@@ -73,9 +73,9 @@ function StatsSection() {
                 visible: { opacity: 1, y: 0, scale: 1 },
               }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="group rounded-2xl p-px bg-linear-to-br from-white/20 to-white/5 hover:from-white/40 hover:to-white/10"
+              className="group rounded-2xl p-px bg-linear-to-br from-white/20 to-white/5 shadow-lg shadow-buttonbg/30"
             >
-              <div className="rounded-2xl bg-background/80 backdrop-blur p-6 shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 h-full">
+              <div className="rounded-2xl bg-background/80 backdrop-blur p-6 shadow-lg transition-all duration-300  h-full">
                 <h3 className="text-4xl md:text-5xl font-bold text-buttonbg">
                   {stat.value}
                 </h3>
