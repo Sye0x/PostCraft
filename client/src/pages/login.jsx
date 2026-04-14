@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import validateLogin from "../utils/validateLogin";
-import { useEffect } from "react";
+import axios from "axios";
 
 const initialForm = {
   email: "",
@@ -15,6 +15,9 @@ function Login() {
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const navigate = useNavigate(); // ✅ IMPORTANT
 
   const handleChange = ({ target: { name, value } }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -24,30 +27,47 @@ function Login() {
 
   const validate = () => {
     const newErrors = validateLogin(formData);
-
     setErrors(newErrors);
     return !Object.keys(newErrors).length;
   };
 
-  function handleSubmit(e) {
+  // ✅ FIXED FUNCTION
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validate()) return;
 
-    // Example fake login check
-    if (
-      formData.email !== "test@example.com" ||
-      formData.password !== "Password@123"
-    ) {
-      setMessage("Invalid email or password");
-      return;
-    }
+    setIsSubmitting(true);
 
-    setMessage("Login successful!");
-    setFormData(initialForm);
-    setErrors({});
-  }
-  const isDisabled = Object.values(formData).some((value) => !value.trim());
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formData,
+        { withCredentials: true },
+      );
+
+      console.log("Login success:", res.data);
+
+      setMessage("Login successful!");
+      setFormData(initialForm);
+      setErrors({});
+
+      // ✅ Redirect after short delay (so user sees success)
+      setTimeout(() => {
+        navigate("/post-generate");
+      }, 800);
+    } catch (err) {
+      const msg = err.response?.data?.message || "Login failed";
+
+      setMessage(msg);
+      console.error(msg);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const isDisabled =
+    Object.values(formData).some((value) => !value.trim()) || isSubmitting;
 
   return (
     <div className="bg-background min-h-screen flex items-center justify-center">
@@ -111,6 +131,7 @@ function Login() {
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
+
           {errors.password && (
             <p className="text-red-500 text-xs mt-1">{errors.password}</p>
           )}
@@ -127,7 +148,7 @@ function Login() {
             disabled={isDisabled}
             className="mt-6 w-full bg-buttonbg text-white py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Login
+            {isSubmitting ? "Logging in..." : "Login"}
           </button>
 
           <div className="flex items-center my-6">

@@ -2,10 +2,11 @@ import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import validateSignup from "../utils/validateSignup";
+import axios from "axios";
+import validateSignup from "../utils/validateSignup.js";
 
 const initialForm = {
-  fullName: "",
+  name: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -17,6 +18,7 @@ function Register() {
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = ({ target: { name, value } }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -30,17 +32,35 @@ function Register() {
     return !Object.keys(newErrors).length;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validate()) return;
 
-    console.log("Form submitted", formData);
-    setSuccess("Account created successfully!");
-    setFormData(initialForm);
-    setErrors({});
+    setIsSubmitting(true);
 
-    setTimeout(() => setSuccess(""), 5000);
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        formData,
+        { withCredentials: true },
+      );
+
+      setSuccess("Account created successfully!");
+      setFormData(initialForm);
+      setErrors({});
+      setTimeout(() => setSuccess(""), 5000);
+    } catch (err) {
+      const message = err.response?.data?.message || "Something went wrong";
+
+      if (message === "Email already in use") {
+        setErrors((prev) => ({ ...prev, email: message }));
+      } else {
+        setErrors((prev) => ({ ...prev, general: message }));
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const isDisabled = Object.values(formData).some((value) => !value.trim());
@@ -62,6 +82,11 @@ function Register() {
             <p className="text-green-600 text-sm text-center">{success}</p>
           </div>
         )}
+        {errors.general && (
+          <div className="bg-red-100 text-red-600 text-sm p-3 rounded-lg mt-3">
+            {errors.general}
+          </div>
+        )}
 
         <form className="mt-5" onSubmit={handleSubmit}>
           <label className="block text-sm font-semibold text-foreground/70 mb-2">
@@ -69,14 +94,14 @@ function Register() {
           </label>
           <input
             type="text"
-            name="fullName"
+            name="name"
             placeholder="Enter your full name"
-            value={formData.fullName}
+            value={formData.name}
             onChange={handleChange}
             className="bg-background text-foreground border w-full border-foreground/30 focus:ring-1 focus:ring-buttonbg focus:outline-none py-2 px-4 rounded-lg"
           />
-          {errors.fullName && (
-            <p className="text-red-500 text-xs mt-1 mb-3">{errors.fullName}</p>
+          {errors.name && (
+            <p className="text-red-500 text-xs mt-1 mb-3">{errors.name}</p>
           )}
 
           <label className="block text-sm font-semibold text-foreground/70 mb-1 mt-2">
@@ -146,10 +171,17 @@ function Register() {
 
           <button
             type="submit"
-            disabled={isDisabled}
-            className="mt-6 w-full bg-buttonbg text-white py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isDisabled || isSubmitting}
+            className="cursor-pointer mt-6 w-full bg-buttonbg text-white py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Create Account
+            {isSubmitting ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                Submitting...
+              </span>
+            ) : (
+              "Create Account"
+            )}{" "}
           </button>
 
           <div className="flex items-center my-6">

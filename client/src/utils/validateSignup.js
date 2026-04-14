@@ -1,10 +1,10 @@
 const validateSignup = (formData) => {
   const newErrors = {};
 
-  if (!formData.fullName.trim()) {
-    newErrors.fullName = "Full name is required";
-  } else if (!/^[A-Za-z\s]+$/.test(formData.fullName)) {
-    newErrors.fullName = "Name can only contain letters and spaces";
+  if (!formData.name.trim()) {
+    newErrors.name = "Full name is required";
+  } else if (!/^[A-Za-z\s]+$/.test(formData.name)) {
+    newErrors.name = "Name can only contain letters and spaces";
   }
 
   if (!formData.email.trim()) {
