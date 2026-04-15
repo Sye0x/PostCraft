@@ -4,7 +4,7 @@ import FeatureSection from "../components/landingPage/featuresection";
 import StatsSection from "../components/landingPage/statsection";
 import TestimonialSection from "../components/landingPage/testimonialsection";
 import Footer from "../components/footer";
-import { SunMoon } from "lucide-react";
+import { SunMoon, Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import PostPromptArea from "../components/postGeneratePage/postPromptArea";
 import { useNavigate } from "react-router";
@@ -15,6 +15,7 @@ function PostGeneratePage() {
   const [darkMode, setDarkMode] = useState(true);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,9 +67,20 @@ function PostGeneratePage() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 md:w-175 md:h-175 
         bg-buttonbg/20 blur-[120px] rounded-full z-0"
       />
-      <div className="relative z-10">
-        <SidebarLayout />
-        <PostPromptArea />
+      <div className="relative flex z-10">
+        {!isOpen ? (
+          <button
+            className="md:hidden fixed top-3 left-3 z-50 bg-background text-foreground p-2 rounded"
+            onClick={() => setIsOpen((prev) => !prev)}
+          >
+            <Menu />
+          </button>
+        ) : null}
+
+        <SidebarLayout isOpen={isOpen} setIsOpen={setIsOpen} />
+        <div className="flex-1">
+          <PostPromptArea />
+        </div>
         <button
           onClick={toggleTheme}
           className="fixed bottom-6 right-6 z-50 

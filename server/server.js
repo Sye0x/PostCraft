@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
+import postGenerateRoute from "./routes/postGenerate.js";
 
 dotenv.config(); // IMPORTANT FIX
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/postGen", postGenerateRoute);
 
 app.get("/", (req, res) => {
   res.send("API Running...");
