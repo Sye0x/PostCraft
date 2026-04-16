@@ -9,9 +9,12 @@ import Login from "./pages/login.jsx";
 import AboutPage from "./pages/aboutPage.jsx";
 import ContactUs from "./pages/contactUsPage.jsx";
 import FAQ from "./pages/FAQPage.jsx";
+import NotFound from "./pages/notFound.jsx";
+
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
+      <Route path="/*" element={<NotFound />} />
       <Route path="/" element={<App />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactUs />} />
