@@ -52,7 +52,7 @@ router.post("/generate-post", async (req, res) => {
     }
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-3-flash-preview",
       contents: [
         {
           role: "system",

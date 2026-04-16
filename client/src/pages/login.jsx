@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import validateLogin from "../utils/validateLogin";
 import axios from "axios";
+import { api } from "../api/api.js";
 
 const initialForm = {
   email: "",
@@ -34,31 +35,22 @@ function Login() {
   // ✅ FIXED FUNCTION
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validate()) return;
-
     setIsSubmitting(true);
-
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        formData,
-        { withCredentials: true },
-      );
-
-      console.log("Login success:", res.data);
-
+      const data = await api("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+      console.log("Login success:", data);
       setMessage("Login successful!");
       setFormData(initialForm);
       setErrors({});
-
-      // ✅ Redirect after short delay (so user sees success)
       setTimeout(() => {
         navigate("/post-generate");
       }, 800);
     } catch (err) {
-      const msg = err.response?.data?.message || "Login failed";
-
+      const msg = err.message || "Login failed";
       setMessage(msg);
       console.error(msg);
     } finally {

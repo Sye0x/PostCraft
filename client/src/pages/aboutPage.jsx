@@ -1,13 +1,16 @@
-import Navbar from "../components/navbar";
-import HeroSection from "../components/landingPage/herosection";
-import FeatureSection from "../components/landingPage/featuresection";
-import StatsSection from "../components/landingPage/statsection";
-import TestimonialSection from "../components/landingPage/testimonialsection";
-import Footer from "../components/footer";
-import { SunMoon } from "lucide-react";
+import { motion } from "framer-motion";
+import { Link } from "react-router";
 import { useState, useEffect } from "react";
+import { SunMoon } from "lucide-react";
+import Navbar from "../components/navbar";
+import Footer from "../components/footer";
+import HeroSection from "../components/aboutPage/heroSection";
+import StorySection from "../components/aboutPage/storySection";
+import ValueSection from "../components/aboutPage/valueSection";
+import StatusBanner from "../components/aboutPage/statusBanner";
+import AboutCTA from "../components/aboutPage/CTA";
 
-function LandingPage() {
+function AboutPage() {
   const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
@@ -36,18 +39,18 @@ function LandingPage() {
   };
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background min-h-screen ">
       <Navbar />
       <HeroSection />
-      <FeatureSection />
-      <StatsSection />
-      <TestimonialSection />
+      <StorySection />
+      <ValueSection />
+      <StatusBanner />
+      <AboutCTA />
       <Footer />
 
-      {/* Floating Theme Button */}
       <button
         onClick={toggleTheme}
-        className="fixed bottom-6 right-6 z-40 
+        className="fixed bottom-6 right-6 z-50 
         w-12 h-12 rounded-full 
         bg-buttonbg text-white 
         shadow-lg shadow-black/20 
@@ -61,4 +64,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default AboutPage;

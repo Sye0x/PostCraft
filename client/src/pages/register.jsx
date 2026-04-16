@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import validateSignup from "../utils/validateSignup.js";
+import { api } from "../api/api.js";
 
 const initialForm = {
   name: "",
@@ -34,25 +35,19 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validate()) return;
-
     setIsSubmitting(true);
-
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        formData,
-        { withCredentials: true },
-      );
-
+      await api("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
       setSuccess("Account created successfully!");
       setFormData(initialForm);
       setErrors({});
       setTimeout(() => setSuccess(""), 5000);
     } catch (err) {
-      const message = err.response?.data?.message || "Something went wrong";
-
+      const message = err.message || "Something went wrong";
       if (message === "Email already in use") {
         setErrors((prev) => ({ ...prev, email: message }));
       } else {

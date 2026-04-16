@@ -10,6 +10,7 @@ import PostPromptArea from "../components/postGeneratePage/postPromptArea";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import SidebarLayout from "../components/postGeneratePage/sideBar";
+import { api } from "../api/api.js";
 
 function PostGeneratePage() {
   const [darkMode, setDarkMode] = useState(true);
@@ -33,15 +34,10 @@ function PostGeneratePage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/me", {
-          withCredentials: true,
-        });
-
-        setUser(res.data);
-      } catch (err) {
-        console.log("Not logged in");
-      } finally {
-        setLoading(false);
+        const data = await api("/api/auth/me");
+        setUser(data.user);
+      } catch {
+        setUser(null);
       }
     };
 

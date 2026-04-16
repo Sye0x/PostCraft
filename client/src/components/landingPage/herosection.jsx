@@ -7,7 +7,7 @@ function HeroSection() {
         initial={{ opacity: 0, y: 80, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-230 h-75 md:h-83 lg:h-88 bg-background z-20 shadow-2xl shadow-buttonbg rounded-2xl p-7"
+        className="w-230 h-75 md:h-83 lg:h-88 bg-background  shadow-2xl shadow-buttonbg rounded-2xl p-7"
       >
         {/* Heading */}
         <motion.h1
