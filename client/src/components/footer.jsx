@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 function Footer() {
   return (
     <footer className="w-full px-6 py-10 bg-background border-t border-white/10">
@@ -15,11 +17,15 @@ function Footer() {
 
         {/* Links */}
         <div className="flex items-center gap-6 text-sm text-foreground/60 font-medium">
-          <span className="hover:text-buttonbg cursor-pointer">Features</span>
-          <span className="hover:text-buttonbg cursor-pointer">
-            How it Works
-          </span>
-          <span className="hover:text-buttonbg cursor-pointer">Contact</span>
+          <Link to={"/about"} className="hover:text-buttonbg cursor-pointer">
+            About
+          </Link>
+          <Link to={"/contact"} className="hover:text-buttonbg cursor-pointer">
+            Contact
+          </Link>
+          <Link to={"/FAQ"} className="hover:text-buttonbg cursor-pointer">
+            FAQ
+          </Link>
         </div>
 
         {/* Bottom */}

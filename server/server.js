@@ -2,18 +2,23 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+
+import connectDB from "./config/db.js";
 import authRoutes from "./routes/auth.js";
 import postGenerateRoute from "./routes/postGenerate.js";
 
-dotenv.config(); // IMPORTANT FIX
+dotenv.config();
 
 const app = express();
+
+// Connect MongoDB
+connectDB();
 
 // Middleware
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
-    credentials: true, // IMPORTANT FOR COOKIES
+    origin: process.env.CLIENT_URL,
+    credentials: true,
   }),
 );
 

@@ -14,10 +14,49 @@ import { api } from "../api/api.js";
 
 function PostGeneratePage() {
   const [darkMode, setDarkMode] = useState(true);
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
+
+  //shared
+  const [history, setHistory] = useState([]);
+  const [currentPrompt, setCurrentPrompt] = useState("");
+  const [currentResult, setCurrentResult] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const saveCurrentChat = () => {
+    if (!currentPrompt || !currentResult) return;
+
+    const newChat = {
+      id: Date.now(),
+      prompt: currentPrompt,
+      result: currentResult,
+    };
+
+    setHistory((prev) => [newChat, ...prev]);
+  };
+
+  const fetchHistory = async () => {
+    try {
+      const data = await api("/api/postGen/history");
+      setHistory(data.history);
+    } catch {
+      setHistory([]);
+    }
+  };
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const data = await api("/api/postGen/history");
+        setHistory(data.history);
+      } catch {
+        setHistory([]);
+      }
+    };
+
+    fetchHistory();
+  }, []);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -73,9 +112,23 @@ function PostGeneratePage() {
           </button>
         ) : null}
 
-        <SidebarLayout isOpen={isOpen} setIsOpen={setIsOpen} />
+        <SidebarLayout
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          history={history}
+          setHistory={setHistory}
+          setCurrentPrompt={setCurrentPrompt}
+          setCurrentResult={setCurrentResult}
+          onNewChat={saveCurrentChat}
+        />
         <div className="flex-1">
-          <PostPromptArea />
+          <PostPromptArea
+            input={currentPrompt}
+            result={currentResult}
+            setInput={setCurrentPrompt}
+            setResultGlobal={setCurrentResult}
+            refreshHistory={fetchHistory}
+          />
         </div>
         <button
           onClick={toggleTheme}

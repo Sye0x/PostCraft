@@ -1,29 +1,40 @@
 import { useState } from "react";
 import ResultModal from "./promptResult";
 import { api } from "../../api/api.js";
+import { useEffect } from "react";
 
-function PostPromptArea() {
-  const [input, setInput] = useState("");
+function PostPromptArea({
+  input,
+  result,
+  setInput,
+  setResultGlobal,
+  refreshHistory,
+}) {
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [result, setResult] = useState("");
 
   const handleGenerate = async () => {
     if (!input.trim()) return;
+
+    setLoading(true);
+
     try {
-      setLoading(true);
       const data = await api("/api/postGen/generate-post", {
         method: "POST",
         body: JSON.stringify({ prompt: input }),
       });
-      setResult(data.result);
+
+      setResultGlobal(data.result);
       setIsModalOpen(true);
-    } catch (error) {
-      console.error(error);
+
+      // 🔥 REFRESH HISTORY AFTER GENERATION
+      await refreshHistory();
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {}, []);
 
   const isDisabled = !input.trim() || loading; // 👈 disabled if empty or loading
 
@@ -62,6 +73,17 @@ function PostPromptArea() {
         onClose={() => setIsModalOpen(false)}
         result={result}
       />
+      {result && (
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="mt-3 flex items-center gap-2 px-4 py-2 rounded-full 
+    bg-buttonbg/10 text-buttonbg border border-buttonbg/30 
+    hover:bg-buttonbg/20 transition-all duration-200
+    active:scale-95 text-sm font-medium"
+        >
+          View Last Result
+        </button>
+      )}
     </div>
   );
 }
